@@ -113,9 +113,9 @@ jobs:
         shell: cmd
         run: '"%MSBUILD_PATH%\MSBuild.exe" examples/example_glfw_opengl2/example_glfw_opengl2.vcxproj /p:Platform=Win32 /p:Configuration=Release'
 
-      - name: Build Win32 example_glfw_opengl3
+      - name: Build Win32 std_cubetimer
         shell: cmd
-        run: '"%MSBUILD_PATH%\MSBuild.exe" examples/example_glfw_opengl3/example_glfw_opengl3.vcxproj /p:Platform=Win32 /p:Configuration=Release'
+        run: '"%MSBUILD_PATH%\MSBuild.exe" examples/std_cubetimer/std_cubetimer.vcxproj /p:Platform=Win32 /p:Configuration=Release'
         if: github.event_name == 'workflow_run'
 
       - name: Build Win32 example_glfw_vulkan
@@ -160,9 +160,9 @@ jobs:
         run: '"%MSBUILD_PATH%\MSBuild.exe" examples/example_glfw_opengl2/example_glfw_opengl2.vcxproj /p:Platform=x64 /p:Configuration=Release'
         if: github.event_name == 'workflow_run'
 
-      - name: Build x64 example_glfw_opengl3
+      - name: Build x64 std_cubetimer
         shell: cmd
-        run: '"%MSBUILD_PATH%\MSBuild.exe" examples/example_glfw_opengl3/example_glfw_opengl3.vcxproj /p:Platform=x64 /p:Configuration=Release'
+        run: '"%MSBUILD_PATH%\MSBuild.exe" examples/std_cubetimer/std_cubetimer.vcxproj /p:Platform=x64 /p:Configuration=Release'
 
       - name: Build x64 example_glfw_vulkan
         shell: cmd
@@ -385,8 +385,8 @@ jobs:
     - name: Build example_glfw_opengl2
       run: make -C examples/example_glfw_opengl2
 
-    - name: Build example_glfw_opengl3
-      run: make -C examples/example_glfw_opengl3
+    - name: Build std_cubetimer
+      run: make -C examples/std_cubetimer
       if: github.event_name == 'workflow_run'
 
     - name: Build example_sdl_opengl2
@@ -436,8 +436,8 @@ jobs:
     - name: Build example_glfw_opengl2
       run: make -C examples/example_glfw_opengl2
 
-    - name: Build example_glfw_opengl3
-      run: make -C examples/example_glfw_opengl3
+    - name: Build std_cubetimer
+      run: make -C examples/std_cubetimer
       if: github.event_name == 'workflow_run'
 
     - name: Build example_glfw_metal
