@@ -1,5 +1,0 @@
-#include "i"
-
-int main() {
-
-}
