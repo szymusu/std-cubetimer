@@ -103,7 +103,7 @@ int main(int, char**)
     //io.Fonts->AddFontDefault();
     //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
     ImFont* droidSans16 = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-    ImFont* droidSans64 = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 64.0f);
+    ImFont* droidSansHuge = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 256.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
@@ -112,6 +112,9 @@ int main(int, char**)
     // Our state
     bool show_demo_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    CubeTimer cubeTimer;
+    cubeTimer.timeFont = droidSansHuge;
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -132,7 +135,7 @@ int main(int, char**)
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
-        CubeTimer(droidSans64);
+        cubeTimer.renderFrame();
 
         // Rendering
         ImGui::Render();

@@ -45,3 +45,4 @@ cmake-build-*
 ## Unix executables from our example Makefiles
 examples/std_cubetimer/std_cubetimer
 /examples/std_cubetimer/std_cubetimer
+/examples/std_cubetimer/build/

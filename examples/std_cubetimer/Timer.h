@@ -3,18 +3,48 @@
 
 #include "../../imgui.h"
 
-void CubeTimer(ImFont* font) {
-    static float timer = 0;
+class CubeTimer {
+private:
+    float time = 0;
+    bool running = false;
 
-    ImGui::Begin("std::cubetimer");
 
-    timer += ImGui::GetIO().DeltaTime;
+    void startTimer() {
+        time = 0;
+        running = true;
+    }
 
-    ImGui::PushFont(font);
-    ImGui::Text("%.2f", timer);
-    ImGui::PopFont();
+    void stopTimer() {
+        running = false;
+    }
 
-    ImGui::End();
-}
+    bool spacePressed() {
+        float downDuration = ImGui::GetIO().KeysData[ImGuiKey::ImGuiKey_Space].DownDuration;
+        return (downDuration < ImGui::GetIO().DeltaTime) && downDuration >= 0;
+    }
 
-#endif //IMGUI_TIMER_H
+public:
+    ImFont* timeFont;
+
+    void renderFrame() {
+        ImGui::Begin("std::cubetimer");
+
+        if (running) {
+            time += ImGui::GetIO().DeltaTime;
+        }
+
+        ImGui::PushFont(timeFont);
+        if (spacePressed()) {
+            if (running)
+                stopTimer();
+            else
+                startTimer();
+        }
+        ImGui::Text("%.2f", time);
+        ImGui::PopFont();
+
+        ImGui::End();
+    }
+};
+
+#endif
