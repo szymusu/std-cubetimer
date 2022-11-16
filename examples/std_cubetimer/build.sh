@@ -1,3 +1,3 @@
-g++ -std=c++20 -I../.. -I../../backends -g -Wall -Wformat `pkg-config --cflags glfw3` -c -o main.o main.cpp
-g++ -o std_cubetimer main.o imgui.o imgui_demo.o imgui_draw.o imgui_tables.o imgui_widgets.o imgui_impl_glfw.o imgui_impl_opengl3.o -std=c++20 -I../.. -I../../backends -g -Wall -Wformat `pkg-config --cflags glfw3` -lGL `pkg-config --static --libs glfw3`
+g++ -std=c++20 -I../.. -I../../backends -g -Wall -Wformat `pkg-config --cflags glfw3` -c -o build/main.o main.cpp
+g++ -o std_cubetimer build/main.o build/imgui.o build/imgui_demo.o build/imgui_draw.o build/imgui_tables.o build/imgui_widgets.o build/imgui_impl_glfw.o build/imgui_impl_opengl3.o -std=c++20 -I../.. -I../../backends -g -Wall -Wformat `pkg-config --cflags glfw3` -lGL `pkg-config --static --libs glfw3`
 ./std_cubetimer

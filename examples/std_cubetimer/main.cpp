@@ -13,7 +13,7 @@
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
-#include "Timer.h"
+#include "time/Timer.h"
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -102,18 +102,18 @@ int main(int, char**)
     // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
     //io.Fonts->AddFontDefault();
     //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
-    ImFont* droidSans16 = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-    ImFont* droidSansHuge = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 256.0f);
+    ImFont* droidSansNormal = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 20.0f);
+    ImFont* droidSansHuge = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 300.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     //IM_ASSERT(font != NULL);
 
     // Our state
-    bool show_demo_window = false;
+    bool show_demo_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    io.FontDefault = droidSans16;
+    io.FontDefault = droidSansNormal;
     CubeTimer cubeTimer;
     cubeTimer.timeFont = droidSansHuge;
 

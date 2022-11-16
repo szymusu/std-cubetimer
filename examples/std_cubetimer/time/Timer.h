@@ -2,10 +2,8 @@
 #define IMGUI_TIMER_H
 
 #include <vector>
-#include <array>
-#include <iostream>
 
-#include "../../imgui.h"
+#include "../../../imgui.h"
 
 class CubeTimer {
 private:
@@ -22,9 +20,8 @@ private:
     void stopTimer() {
         running = false;
         times.push_back(time);
-        size_t s = times.size();
-        if (s >= 5) {
-            rollingAo5 = getAo5({times[s-1], times[s-2], times[s-3], times[s-4], times[s-5]});
+        if (times.size() >= 5) {
+            rollingAo5 = getAo5(times.data() + times.size() - 5);
         }
     }
 
@@ -33,7 +30,7 @@ private:
         return downDuration >= 0 && (downDuration < ImGui::GetIO().DeltaTime);
     }
 
-    float getAo5(std::array<float, 5> times) {
+    float getAo5(float times[]) {
         int minIndex = 0, maxIndex = 0;
         for (int i = 1; i < 5; i++) {
             if (times[i] > times[maxIndex]) {
