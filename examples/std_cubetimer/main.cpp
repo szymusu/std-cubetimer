@@ -113,6 +113,7 @@ int main(int, char**)
     bool show_demo_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    io.FontDefault = droidSans16;
     CubeTimer cubeTimer;
     cubeTimer.timeFont = droidSansHuge;
 
