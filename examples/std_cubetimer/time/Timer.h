@@ -4,13 +4,16 @@
 #include <vector>
 
 #include "../../../imgui.h"
+#include "TimeList.h"
+#include "TimeEntry.h"
+#include "../cube/Scramble.h"
 
 class CubeTimer {
 private:
     float time = 0;
     bool running = false;
     float rollingAo5 = 0;
-    std::vector<float> times;
+    TimeList timeList;
 
     void startTimer() {
         time = 0;
@@ -19,10 +22,11 @@ private:
 
     void stopTimer() {
         running = false;
-        times.push_back(time);
-        if (times.size() >= 5) {
-            rollingAo5 = getAo5(times.data() + times.size() - 5);
-        }
+        Scramble s;
+        timeList.add({ time, s });
+//        if (times.size() >= 5) {
+//            rollingAo5 = getAo5(times.data() + times.size() - 5);
+//        }
     }
 
     bool spacePressed() {
@@ -69,6 +73,7 @@ public:
         ImGui::Text("%.2f", time);
         ImGui::PopFont();
         ImGui::Text("ao5: %.2f", rollingAo5);
+        timeList.renderTable();
 
         ImGui::End();
     }

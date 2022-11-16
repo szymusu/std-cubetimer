@@ -4,6 +4,7 @@
 #include "../cube/Scramble.h"
 
 class TimeEntry {
+public:
     float time;
     Scramble scramble;
 };
