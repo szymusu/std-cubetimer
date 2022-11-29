@@ -9,27 +9,33 @@
 class Scramble {
 private:
     std::array<Move, 25> moves;
+    std::string movesNotation;
 
     void generate() {
         moves.fill({F, TWO});
     }
 
-public:
-    Scramble() {
-        generate();
+    void generateNotation() {
+        for (size_t i = 0; i < moves.size(); i++) {
+            movesNotation[2*i] = moves[i].faceChar();
+            char suffix = ' ';
+            if (moves[i].modifier == PRIME)
+                suffix = '\'';
+            else if (moves[i].modifier == TWO)
+                suffix = '2';
+            movesNotation[2*i + 1] = suffix;
+        }
     }
 
-    char* toString() {
-        std::string out;
-        for (Move& move : this->moves) {
-            out.insert(0, 1, move.faceChar());
-            if (move.modifier == PRIME)
-                out.insert(0, 1, '\'');
-            else if (move.modifier == TWO)
-                out.insert(0, 1, '2');
-            out.insert(0, 1, ' ');
-        }
-        return out.data();
+public:
+    char* getNotationChars() {
+        return movesNotation.data();
+    }
+
+    Scramble() {
+        generate();
+        generateNotation();
+        printf("%s\n", getNotationChars());
     }
 };
 

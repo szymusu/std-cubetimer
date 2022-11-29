@@ -39,7 +39,7 @@ public:
                     ImGui::TableSetColumnIndex(1);
                     ImGui::Text("%.2f", times[row].time);
                     ImGui::TableSetColumnIndex(2);
-                    ImGui::Text("%s", times[row].scramble.toString());
+                    ImGui::Text("%s", times[row].scramble.getNotationChars());
                 }
             }
             ImGui::EndTable();
