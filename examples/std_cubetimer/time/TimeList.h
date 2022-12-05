@@ -15,6 +15,27 @@ public:
         times.push_back(time);
     }
 
+    float getAverage(size_t numOfTimes, bool includeFastestAndSlowest = false) {
+        if (!numOfTimes || numOfTimes > times.size()) return -1;
+
+        TimeEntry fastest = times.at(times.size() - 1);
+        TimeEntry slowest = times.at(times.size() - 1);
+        float total = 0;
+        for (int i = 1; i <= numOfTimes; ++i) {
+            TimeEntry t = times.at(times.size() - i);
+            total += t.time;
+            if (t.time > slowest.time) slowest = t;
+            if (t.time < fastest.time) fastest = t;
+        }
+
+        if (includeFastestAndSlowest) {
+            return total / numOfTimes;
+        }
+        else {
+            return (total - fastest.time - slowest.time) / (numOfTimes - 2);
+        }
+    }
+
     void renderTable() {
         static ImGuiTableFlags flags = ImGuiTableFlags_ScrollY | ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
 

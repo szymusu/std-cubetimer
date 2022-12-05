@@ -12,7 +12,7 @@ class CubeTimer {
 private:
     float time = 0;
     bool running = false;
-    float rollingAo5 = 0;
+    float rollingAo5 = -1;
     TimeList timeList;
 
     void startTimer() {
@@ -24,9 +24,7 @@ private:
         running = false;
         Scramble s;
         timeList.add({ time, s });
-//        if (times.size() >= 5) {
-//            rollingAo5 = getAo5(times.data() + times.size() - 5);
-//        }
+        rollingAo5 = timeList.getAverage(5);
     }
 
     bool spacePressed() {
@@ -34,24 +32,6 @@ private:
         return downDuration >= 0 && (downDuration < ImGui::GetIO().DeltaTime);
     }
 
-    float getAo5(float times[]) {
-        int minIndex = 0, maxIndex = 0;
-        for (int i = 1; i < 5; i++) {
-            if (times[i] > times[maxIndex]) {
-                maxIndex = i;
-            }
-            else if (times[i] < times[minIndex]) {
-                minIndex = i;
-            }
-        }
-        float sumOf3 = 0;
-        for (int i = 0; i < 5; ++i) {
-            if (i != minIndex && i != maxIndex) {
-                sumOf3 += times[i];
-            }
-        }
-        return sumOf3 / 3;
-    }
 
 public:
     ImFont* timeFont;

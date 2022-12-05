@@ -103,6 +103,7 @@ int main(int, char**)
     //io.Fonts->AddFontDefault();
     //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
     ImFont* droidSansNormal = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 20.0f);
+    ImFont* droidSansMedium = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 100.0f);
     ImFont* droidSansHuge = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 300.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
