@@ -7,6 +7,7 @@
 #include "../../backends/imgui_impl_glfw.h"
 #include "../../backends/imgui_impl_opengl3.h"
 #include <stdio.h>
+#include <iostream>
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -14,6 +15,7 @@
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
 #include "time/Timer.h"
+#include "cube/Cube.h"
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -103,7 +105,7 @@ int main(int, char**)
     //io.Fonts->AddFontDefault();
     //io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
     ImFont* droidSansNormal = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 20.0f);
-    ImFont* droidSansMedium = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 100.0f);
+//    ImFont* droidSansMedium = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 100.0f);
     ImFont* droidSansHuge = io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 300.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
@@ -117,6 +119,133 @@ int main(int, char**)
     io.FontDefault = droidSansNormal;
     CubeTimer cubeTimer;
     cubeTimer.timeFont = droidSansHuge;
+
+    Cube cube;
+    std::cout << cube.isSolved() << std::endl;
+
+//    cube.makeMove({F, NONE});
+//    cube.makeMove({B, NONE});
+//    cube.makeMove({L, NONE});
+//    cube.makeMove({U, TWO});
+//    cube.makeMove({R, NONE});
+//    cube.makeMove({F, PRIME});
+//    cube.makeMove({B, PRIME});
+//    cube.makeMove({L, NONE});
+//    cube.makeMove({D, TWO});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({B, NONE});
+//    cube.makeMove({L, TWO});
+//    cube.makeMove({F, NONE});
+//    cube.makeMove({D, TWO});
+//    cube.makeMove({B, NONE});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({B, NONE});
+//    cube.makeMove({D, TWO});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({F, PRIME});
+//    //F B L U2 R F' B' L D2 R2 B L2 F D2 B R2 B D2 R2 F'
+//
+//    std::cout << cube.isSolved() << std::endl;
+//
+//    cube.makeMove({U, TWO});
+//    cube.makeMove({L, TWO});
+//    cube.makeMove({U, TWO});
+//    cube.makeMove({F, TWO});
+//    cube.makeMove({L, TWO});
+//    cube.makeMove({D, TWO});
+//    cube.makeMove({B, PRIME});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({L, PRIME});
+//    cube.makeMove({B, PRIME});
+//    cube.makeMove({L, TWO});
+//    cube.makeMove({U, NONE});
+//    cube.makeMove({B, TWO});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({U, NONE});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({B, TWO});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({U, NONE});
+//
+//    std::cout << cube.isSolved() << std::endl;
+
+//    //R U R' U' R' F R2 U' R' U' R U R' F'
+//    cube.makeMove({R, NONE});
+//    cube.makeMove({U, NONE});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({F, NONE});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, NONE});
+//    cube.makeMove({U, NONE});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({F, PRIME});
+//    std::cout << cube.isSolved() << std::endl;
+//
+//    cube.makeMove({R, NONE});
+//    cube.makeMove({U, NONE});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({F, NONE});
+//    cube.makeMove({R, TWO});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({U, PRIME});
+//    cube.makeMove({R, NONE});
+//    cube.makeMove({U, NONE});
+//    cube.makeMove({R, PRIME});
+//    cube.makeMove({F, PRIME});
+//    std::cout << cube.isSolved() << std::endl;
+
+    cube.makeMove({F, TWO});
+    cube.makeMove({F, PRIME});
+    cube.makeMove({F, PRIME});
+    std::cout << "R2 R' R': " << cube.isSolved() << std::endl;
+
+    cube.makeMove({R, NONE});
+    cube.makeMove({U, NONE});
+    cube.makeMove({R, PRIME});
+    cube.makeMove({U, NONE});
+    cube.makeMove({R, NONE});
+    cube.makeMove({U, TWO});
+    cube.makeMove({R, PRIME});
+
+    cube.makeMove({R, NONE});
+    cube.makeMove({U, NONE});
+    cube.makeMove({R, PRIME});
+    cube.makeMove({U, NONE});
+    cube.makeMove({R, NONE});
+    cube.makeMove({U, TWO});
+    cube.makeMove({R, PRIME});
+
+    cube.makeMove({R, NONE});
+    cube.makeMove({U, NONE});
+    cube.makeMove({R, PRIME});
+    cube.makeMove({U, NONE});
+    cube.makeMove({R, NONE});
+    cube.makeMove({U, TWO});
+    cube.makeMove({R, PRIME});
+
+    std::cout << cube.isSolved() << std::endl;
+
+
+//    for (int i = 1; i <= 6; ++i) {
+//        cube.makeMove({B, PRIME});
+//        cube.makeMove({U, PRIME});
+//        cube.makeMove({B, NONE});
+//        cube.makeMove({U, NONE});
+//        if (cube.isSolved()) {
+//            std::cout << "Solved in " << i << std::endl;
+//            break;
+//        }
+//    }
+
 
     // Main loop
     while (!glfwWindowShouldClose(window))

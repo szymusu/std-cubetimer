@@ -21,7 +21,7 @@ public:
         TimeEntry fastest = times.at(times.size() - 1);
         TimeEntry slowest = times.at(times.size() - 1);
         float total = 0;
-        for (int i = 1; i <= numOfTimes; ++i) {
+        for (size_t i = 1; i <= numOfTimes; ++i) {
             TimeEntry t = times.at(times.size() - i);
             total += t.time;
             if (t.time > slowest.time) slowest = t;
