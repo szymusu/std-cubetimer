@@ -9,17 +9,23 @@
 
 class TimeList {
 private:
-    std::vector<TimeEntry> times;
     char scrambleBuffer[75];
-    TimeEntry bestTime = {-1};
-    TimeEntry worstTime = {-1};
-    float bestAo5 = -1;
 
 public:
+    TimeEntry bestTime = {-1, -1};
+    TimeEntry worstTime = {-1, -1};
+    float lastAo5 = -1;
+    float bestAo5 = -1;
+    std::vector<TimeEntry> times;
+
     void add(TimeEntry time) {
         times.push_back(time);
         if (bestTime.time < 0 || time.time < bestTime.time) bestTime = time;
         if (worstTime.time < 0 || time.time > worstTime.time) worstTime = time;
+    }
+
+    size_t length() {
+        return times.size();
     }
 
     float getAverage(size_t numOfTimes, bool includeFastestAndSlowest = false) {
@@ -44,6 +50,7 @@ public:
     }
 
     void setLastAo5(float ao5) {
+        lastAo5 = ao5;
         times.at(times.size()-1).rollingAo5 = ao5;
         if (bestAo5 < 0 || ao5 < bestAo5) bestAo5 = ao5;
     }
@@ -63,9 +70,28 @@ public:
     }
 
     void renderTable() {
-        ImGui::Text("Best time: %.2f", bestTime.time);
-        ImGui::Text("Worst time: %.2f", worstTime.time);
-        ImGui::Text("Best ao5: %.2f", bestAo5);
+        ImGui::BeginChild("Time history", ImVec2(800, 600));
+
+        if (bestTime.time < 0)
+            ImGui::Text("Best time: N/A");
+        else
+            ImGui::Text("Best time: %.2f", bestTime.time);
+        ImGui::SameLine(ImGui::GetWindowWidth() - 300);
+        if (lastAo5 < 0)
+            ImGui::Text("Current ao5: N/A");
+        else
+            ImGui::Text("Current ao5: %.2f", lastAo5);
+
+        if (worstTime.time < 0)
+            ImGui::Text("Best time: N/A");
+        else
+            ImGui::Text("Worst time: %.2f", worstTime.time);
+        ImGui::SameLine(ImGui::GetWindowWidth() - 300);
+        if (bestAo5 < 0)
+            ImGui::Text("Best ao5: N/A");
+        else
+            ImGui::Text("Best ao5: %.2f", bestAo5);
+        ImGui::PopFont();
 
         static ImGuiTableFlags flags = ImGuiTableFlags_ScrollY | ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
 
@@ -104,6 +130,7 @@ public:
             }
             ImGui::EndTable();
         }
+        ImGui::EndChild();
     }
 };
 

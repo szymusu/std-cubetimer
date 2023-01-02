@@ -5,6 +5,7 @@
 
 class TimeEntry {
 public:
+    float id;
     float time;
     Scramble scramble;
     float rollingAo5;
