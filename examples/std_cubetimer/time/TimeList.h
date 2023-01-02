@@ -2,6 +2,7 @@
 #define STD_CUBETIMER_TIMELIST_H
 
 #include <vector>
+#include <cstdio>
 
 #include "TimeEntry.h"
 #include "../../../imgui.h"
@@ -9,10 +10,16 @@
 class TimeList {
 private:
     std::vector<TimeEntry> times;
+    char scrambleBuffer[75];
+    TimeEntry bestTime = {-1};
+    TimeEntry worstTime = {-1};
+    float bestAo5 = -1;
 
 public:
     void add(TimeEntry time) {
         times.push_back(time);
+        if (bestTime.time < 0 || time.time < bestTime.time) bestTime = time;
+        if (worstTime.time < 0 || time.time > worstTime.time) worstTime = time;
     }
 
     float getAverage(size_t numOfTimes, bool includeFastestAndSlowest = false) {
@@ -36,17 +43,41 @@ public:
         }
     }
 
+    void setLastAo5(float ao5) {
+        times.at(times.size()-1).rollingAo5 = ao5;
+        if (bestAo5 < 0 || ao5 < bestAo5) bestAo5 = ao5;
+    }
+
+    void generateScrambleNotation(std::array<Move, 25> moves) {
+        for (size_t i = 0; i < moves.size(); i++) {
+            scrambleBuffer[3*i] = moves[i].faceChar();
+            char suffix = ' ';
+            if (moves[i].modifier == PRIME)
+                suffix = '\'';
+            else if (moves[i].modifier == TWO)
+                suffix = '2';
+            scrambleBuffer[3*i + 1] = suffix;
+            scrambleBuffer[3*i + 2] = ' ';
+        }
+        scrambleBuffer[74] = '\0';
+    }
+
     void renderTable() {
+        ImGui::Text("Best time: %.2f", bestTime.time);
+        ImGui::Text("Worst time: %.2f", worstTime.time);
+        ImGui::Text("Best ao5: %.2f", bestAo5);
+
         static ImGuiTableFlags flags = ImGuiTableFlags_ScrollY | ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
 
         // When using ScrollX or ScrollY we need to specify a size for our table container!
         // Otherwise by default the table will fit all available space, like a BeginChild() call.
 //        ImVec2 outer_size = ImVec2(0.0f, TEXT_BASE_HEIGHT * 8);
-        if (ImGui::BeginTable("table_scrolly", 3, flags)) {
+        if (ImGui::BeginTable("table_scrolly", 4, flags)) {
             ImGui::TableSetupScrollFreeze(0, 1); // Make top row always visible
             ImGui::TableSetupColumn("Id", ImGuiTableColumnFlags_None);
             ImGui::TableSetupColumn("Time", ImGuiTableColumnFlags_None);
             ImGui::TableSetupColumn("Scramble", ImGuiTableColumnFlags_None);
+            ImGui::TableSetupColumn("Ao5", ImGuiTableColumnFlags_None);
             ImGui::TableHeadersRow();
 
             // Demonstrate using clipper for large vertical lists
@@ -60,7 +91,15 @@ public:
                     ImGui::TableSetColumnIndex(1);
                     ImGui::Text("%.2f", times[row].time);
                     ImGui::TableSetColumnIndex(2);
-                    ImGui::Text("%s", times[row].scramble.getNotationChars());
+
+                    generateScrambleNotation(times[row].scramble.moves);
+                    ImGui::Text("%s", scrambleBuffer);
+                    ImGui::TableSetColumnIndex(3);
+                    float ao5 = times[row].rollingAo5;
+                    if (ao5 < 0)
+                        ImGui::Text("N/A");
+                    else
+                        ImGui::Text("%.2f", ao5);
                 }
             }
             ImGui::EndTable();

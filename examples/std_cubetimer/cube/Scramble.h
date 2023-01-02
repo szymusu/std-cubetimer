@@ -3,39 +3,38 @@
 
 #include <array>
 #include <string>
+#include <ctime>
+#include <random>
 
 #include "Move.h"
 
 class Scramble {
-private:
+public:
     std::array<Move, 25> moves;
-    std::string movesNotation;
 
     void generate() {
-        moves.fill({F, TWO});
-    }
-
-    void generateNotation() {
-        for (size_t i = 0; i < moves.size(); i++) {
-            movesNotation[2*i] = moves[i].faceChar();
-            char suffix = ' ';
-            if (moves[i].modifier == PRIME)
-                suffix = '\'';
-            else if (moves[i].modifier == TWO)
-                suffix = '2';
-            movesNotation[2*i + 1] = suffix;
+        for (size_t i = 0; i < moves.size(); ++i) {
+            int face = randomInt(0, 5);
+            int modifier = randomInt(0, 2);
+            moves[i] = {(Face)face, (Modifier)modifier};
+            if (i > 0 && moves[i].face == moves[i-1].face) {
+                i--;
+                continue;
+            }
+            if (i > 1 && moves[i].face == moves[i-2].face && moves[i].isOppositeFace(moves[i-1])) {
+                i--;
+                continue;
+            }
         }
     }
 
-public:
-    char* getNotationChars() {
-        return movesNotation.data();
+    int randomInt(int from, int to) {
+        return from + rand() % (to - from);
     }
 
     Scramble() {
+        srand(time(nullptr));
         generate();
-        generateNotation();
-        printf("%s\n", getNotationChars());
     }
 };
 

@@ -14,11 +14,11 @@ public:
         stickers[0] = sticker1;
         stickers[1] = sticker2;
         stickers[2] = sticker3;
+        rotation = 0;
     }
 
     void rotate(unsigned char times) {
-        rotation += times;
-        rotation %= 3;
+        rotation = (rotation+times) % 3;
     }
 
     bool operator== (const Corner &other) const {

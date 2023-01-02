@@ -7,6 +7,7 @@ class TimeEntry {
 public:
     float time;
     Scramble scramble;
+    float rollingAo5;
 };
 
 

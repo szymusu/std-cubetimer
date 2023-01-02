@@ -25,6 +25,7 @@ private:
         Scramble s;
         timeList.add({ time, s });
         rollingAo5 = timeList.getAverage(5);
+        timeList.setLastAo5(rollingAo5);
     }
 
     bool spacePressed() {
@@ -52,8 +53,13 @@ public:
         }
         ImGui::Text("%.2f", time);
         ImGui::PopFont();
-        ImGui::Text("ao5: %.2f", rollingAo5);
+        if (rollingAo5 < 0)
+            ImGui::Text("ao5: N/A");
+        else
+            ImGui::Text("ao5: %.2f", rollingAo5);
         timeList.renderTable();
+
+
 
         ImGui::End();
     }

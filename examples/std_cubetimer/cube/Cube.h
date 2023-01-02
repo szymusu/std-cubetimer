@@ -99,7 +99,7 @@ public:
         for (size_t i = 0; i < corners.size(); ++i) {
             if (corners[i] != SOLVED_CORNERS[i]) {
                 std::cout << "Mismatch corner " << i << std::endl;
-                std::cout << "Rotation: " << static_cast<int>(corners[i].rotation) << std::endl;
+//                std::cout << "Rotation: " << static_cast<int>(corners[i].rotation) << std::endl;
                 mismatches++;
             }
         }
@@ -135,10 +135,10 @@ private:
                 {6, 0},
                 {5, 0}},
                            {
-                {3, false},
-                {2, false},
-                {1, false},
-                {4, false}}
+                {11, false},
+                {10, false},
+                {9, false},
+                {12, false}}
     };
     const Layer LAYER_F = {{
                 {4, 1},

@@ -6,7 +6,7 @@
 #include "../../imgui.h"
 #include "../../backends/imgui_impl_glfw.h"
 #include "../../backends/imgui_impl_opengl3.h"
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
@@ -27,6 +27,61 @@
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
+
+void drawCube() {
+    GLfloat vertices[] = {
+            -1, -1, -1,   -1, -1,  1,   -1,  1,  1,   -1,  1, -1,
+            1, -1, -1,    1, -1,  1,    1,  1,  1,    1,  1, -1,
+            -1, -1, -1,   -1, -1,  1,    1, -1,  1,    1, -1, -1,
+            -1,  1, -1,   -1,  1,  1,    1,  1,  1,    1,  1, -1,
+            -1, -1, -1,   -1,  1, -1,    1,  1, -1,    1, -1, -1,
+            -1, -1,  1,   -1,  1,  1,    1,  1,  1,    1, -1,  1
+    };
+
+    GLfloat colors[] = {
+            0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+            1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+            0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+            0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+            0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+            0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
+    };
+
+    static float alpha = 0;
+    //attempt to rotate cube
+    glRotatef(alpha, 0, 1, 0);
+
+    /* We have a color array and a vertex array */
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glColorPointer(3, GL_FLOAT, 0, colors);
+
+    /* Send data : 24 vertices */
+    glDrawArrays(GL_QUADS, 0, 24);
+
+    /* Cleanup states */
+    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    alpha += 1;
+}
+
+static void draw_callback(const ImDrawList* parent_list, const ImDrawCmd* cmd) {
+    glViewport(0, 0, 100, 300);
+
+    // Draw stuff
+    glClearColor(0.0, 0.8, 0.3, .3);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_PROJECTION_MATRIX);
+    glLoadIdentity();
+//    gluPerspective(60, 500.0 / 300.0, 0.1, 100);
+
+    glMatrixMode(GL_MODELVIEW_MATRIX);
+//    glTranslatef(0,0,-5);
+
+    drawCube();
 }
 
 int main(int, char**)
@@ -120,8 +175,8 @@ int main(int, char**)
     CubeTimer cubeTimer;
     cubeTimer.timeFont = droidSansHuge;
 
-    Cube cube;
-    std::cout << cube.isSolved() << std::endl;
+//    Cube cube;
+//    std::cout << "Initial state: " << cube.isSolved() << std::endl;
 
 //    cube.makeMove({F, NONE});
 //    cube.makeMove({B, NONE});
@@ -185,7 +240,7 @@ int main(int, char**)
 //    cube.makeMove({U, NONE});
 //    cube.makeMove({R, PRIME});
 //    cube.makeMove({F, PRIME});
-//    std::cout << cube.isSolved() << std::endl;
+//    std::cout << "T perm 1 " << cube.isSolved() << std::endl;
 //
 //    cube.makeMove({R, NONE});
 //    cube.makeMove({U, NONE});
@@ -201,45 +256,26 @@ int main(int, char**)
 //    cube.makeMove({U, NONE});
 //    cube.makeMove({R, PRIME});
 //    cube.makeMove({F, PRIME});
+//    std::cout << "T perm 2 " << cube.isSolved() << std::endl;
+
+//    cube.makeMove({F, TWO});
+//    cube.makeMove({F, PRIME});
+//    cube.makeMove({F, PRIME});
+//    std::cout << "R2 R' R': " << cube.isSolved() << std::endl;
+
+//    cube.makeMove({R, NONE});
+//    cube.makeMove({U, TWO});
+//    cube.makeMove({L, PRIME});
 //    std::cout << cube.isSolved() << std::endl;
-
-    cube.makeMove({F, TWO});
-    cube.makeMove({F, PRIME});
-    cube.makeMove({F, PRIME});
-    std::cout << "R2 R' R': " << cube.isSolved() << std::endl;
-
-    cube.makeMove({R, NONE});
-    cube.makeMove({U, NONE});
-    cube.makeMove({R, PRIME});
-    cube.makeMove({U, NONE});
-    cube.makeMove({R, NONE});
-    cube.makeMove({U, TWO});
-    cube.makeMove({R, PRIME});
-
-    cube.makeMove({R, NONE});
-    cube.makeMove({U, NONE});
-    cube.makeMove({R, PRIME});
-    cube.makeMove({U, NONE});
-    cube.makeMove({R, NONE});
-    cube.makeMove({U, TWO});
-    cube.makeMove({R, PRIME});
-
-    cube.makeMove({R, NONE});
-    cube.makeMove({U, NONE});
-    cube.makeMove({R, PRIME});
-    cube.makeMove({U, NONE});
-    cube.makeMove({R, NONE});
-    cube.makeMove({U, TWO});
-    cube.makeMove({R, PRIME});
-
-    std::cout << cube.isSolved() << std::endl;
+//    cube.makeMove({L, NONE});
+//    cube.makeMove({U, TWO});
+//    cube.makeMove({R, PRIME});
+//    std::cout << "chuj" << cube.isSolved() << std::endl;
 
 
-//    for (int i = 1; i <= 6; ++i) {
-//        cube.makeMove({B, PRIME});
+//    for (int i = 1; i <= 110; ++i) {
+//        cube.makeMove({R, PRIME});
 //        cube.makeMove({U, PRIME});
-//        cube.makeMove({B, NONE});
-//        cube.makeMove({U, NONE});
 //        if (cube.isSolved()) {
 //            std::cout << "Solved in " << i << std::endl;
 //            break;
@@ -267,6 +303,14 @@ int main(int, char**)
             ImGui::ShowDemoWindow(&show_demo_window);
 
         cubeTimer.renderFrame();
+
+        bool show_another_window = true;
+        ImGui::SetNextWindowSize(ImVec2(500, 300), 4);
+        ImGui::Begin("Another Window", &show_another_window);
+
+        ImGui::GetWindowDrawList()->AddCallback(draw_callback, NULL);
+
+        ImGui::End();
 
         // Rendering
         ImGui::Render();
